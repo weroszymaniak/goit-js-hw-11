@@ -5,17 +5,21 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Photo search</title>
-    <link rel = "stylesheet" href = "./css/style.css"
+    <link rel = "stylesheet" href = "./css/styles.css"
   </head>
   <body>
-    <form class="search-form" id="search-form">
-      <input
-        type="text"
-        name="searchQuery"
-        autocomplete="off"
-        placeholder="Search images..."
-      />
-      <button type="submit">Search</button>
-    </form>
+    <div class="wrapper">
+      <form class="search-form" id="search-form">
+        <input
+          id="input"
+          type="text"
+          name="searchQuery"
+          autocomplete="off"
+          placeholder="Search images..."
+        />
+        <button type="submit" id="search-btn">Search</button>
+      </form>
+    </div>
+    <script type="module" src="./js/index.js"></script>
   </body>
 </html>

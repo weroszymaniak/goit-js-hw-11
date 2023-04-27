@@ -1,11 +1,14 @@
 body {
+}
+
+.wrapper {
+  padding: 20px;
   background: radial-gradient(
     circle,
     rgba(238, 174, 202, 1) 0%,
     rgba(148, 187, 233, 1) 100%
   );
 }
-
 input {
   padding: 10px 20px;
   max-width: 320px;
@@ -16,7 +19,7 @@ input {
 
 .search-form {
   display: flex;
-  padding: 100px 150px;
+  justify-content: center;
   gap: 80px;
 }
 
@@ -25,7 +28,7 @@ button {
   border: 3px rgb(55, 133, 223);
   border-radius: 10px;
   color: rgb(19, 17, 17);
-  padding: 20px 20px;
+  padding: 7px 20px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
