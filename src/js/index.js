@@ -3,17 +3,19 @@ import axios from 'axios';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 
-//const formEl = document.getElementById('search-form');
 const galleryEl = document.getElementById('gallery');
 const loadBtnEl = document.getElementById('load');
 const searchBtnEl = document.getElementById('search-btn');
 const inputEl = document.getElementById('input');
 
+const lightbox = new SimpleLightbox('.gallery a');
+
 let page = 1;
 const per_page = 40;
-loadBtnEl.style.visibility = 'hidden';
 let totalFoundLength = 0;
 let totalFound = 0;
+loadBtnEl.style.visibility = 'hidden';
+
 const fetchPhotos = async () => {
   const BASE_URL = 'https://pixabay.com/api/';
   const API_KEY = '35612803-f56ab8e28da93ed3650e10521';
@@ -28,7 +30,7 @@ const fetchPhotos = async () => {
       safesearch: true,
     },
   });
-  //console.log(response);
+  console.log(response);
 
   return response;
 };
@@ -37,13 +39,15 @@ function renderPhotos(photos) {
   return photos.data.hits
     .map(photo => {
       return `<div class="photo-card">
+    <a href="${photo.largeImageURL}" class="photo-link">
     <img src="${photo.webformatURL} alt="${photo.tags}" loading="lazy" />
+    </a>
     <div class="info">
       <p class="info-item">
-        <b>Likes</b>${photo.likes}
+        <b>Likes</b> ${photo.likes}
       </p>
       <p class="info-item">
-        <b>Views</b>${photo.views}
+        <b>Views</b> ${photo.views}
       </p>
       <p class="info-item">
         <b>Comments</b> ${photo.comments}
@@ -58,30 +62,46 @@ function renderPhotos(photos) {
 }
 
 const createPhotos = () => {
-  fetchPhotos()
-    .then(photos => {
-      console.log(photos.data.hits);
-      totalFoundLength = photos.data.total;
-      totalFound = photos.data.hits;
-      galleryEl.innerHTML = renderPhotos(photos);
-      alertFound();
+  fetchPhotos().then(photos => {
+    console.log(photos.data.hits);
+    totalFoundLength = photos.data.total;
+    //totalFound = photos.data.hits;
+    lightbox.refresh();
 
-      if (totalFoundLength === 0) {
-        alertEmpty();
-      } else if (totalFoundLength > 40) {
-        console.log('oki');
-        loadBtnEl.style.visibility = 'visible';
-        createMore();
-      }
-    })
-    .catch(error => {
+    if (photos.data.hits.length === 0) {
       alertNoMatch();
-    });
+    }
+
+    //nie działa//
+    if ((inputEl.textContent = '')) {
+      return alertEmpty();
+    }
+
+    if (photos.data.totalHits > 0 && !(inputEl.textContent = '')) {
+      galleryEl.innerHTML = renderPhotos(photos);
+      Notiflix.Notify.success(
+        `Hooray! We found ${photos.data.totalHits} images.`
+      );
+    }
+    if (photos.data.total > per_page) {
+      loadBtnEl.style.visibility = 'visible';
+    } else {
+      loadBtnEl.style.visibility = 'hidden';
+    }
+  });
 };
 
 function createMore() {
   fetchPhotos().then(photos => {
-    totalFoundLength = photos.data.total;
+    if (photos.data.total > per_page) {
+      Notiflix.Notify.success(
+        `Hooray! We found ${photos.data.totalHits} images.`
+      );
+      loadBtnEl.style.visibility = 'visible';
+    } else {
+      loadBtnEl.style.visibility = 'hidden';
+    }
+
     galleryEl.insertAdjacentHTML('beforeend', renderPhotos(photos));
     let gallery = new SimpleLightbox('.gallery a');
 
@@ -96,20 +116,26 @@ function createMore() {
   });
 }
 
-function alertFound() {
-  Notiflix.Notify.success(`Hooray! We found ${totalFound} images.`);
+function clearGallery() {
+  galleryEl.innerHTML = '';
 }
+
+//function alertFound() {
+//  Notiflix.Notify.success(`Hooray! We found ${photos.data.total} images.`);
+//}
 
 function alertEmpty() {
   Notiflix.Notify.failure(
     'The search bar cannot be empty. Please type any criteria in the search bar.'
   );
+  clearGallery();
 }
 
 function alertNoMatch() {
   Notiflix.Notify.failure(
     'Sorry, there are no images matching your search query. Please try again.'
   );
+  clearGallery();
 }
 
 function alertEndOfSearch() {
@@ -125,6 +151,6 @@ searchBtnEl.addEventListener('click', event => {
 });
 
 loadBtnEl.addEventListener('click', () => {
-  page++;
+  page + 1;
   createMore();
 });

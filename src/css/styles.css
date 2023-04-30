@@ -1,8 +1,11 @@
-body {
+* {
+  box-sizing: border-box;
+  margin: 0;
 }
-
 .wrapper {
-  padding: 20px;
+  width: 100%;
+  padding: 40px 20px;
+  margin-top: 0;
   background: radial-gradient(
     circle,
     rgba(238, 174, 202, 1) 0%,
@@ -10,7 +13,7 @@ body {
   );
 }
 input {
-  padding: 10px 20px;
+  padding: 20px 25px;
   max-width: 320px;
   border: 5px #010303;
   border-radius: 10px;
@@ -23,7 +26,7 @@ input {
   gap: 80px;
 }
 
-button {
+.search-btn {
   background-color: rgb(110, 165, 228);
   border: 3px rgb(55, 133, 223);
   border-radius: 10px;
@@ -33,6 +36,51 @@ button {
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
+  box-shadow: 9px 1px 44px -7px rgba(66, 68, 90, 1);
+  cursor: pointer;
+}
+
+.gallery-wrapper {
+  margin: 0 auto;
+}
+.gallery {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 50px;
+  padding-top: 50px;
+  margin: 0 auto;
+  justify-content: center;
+  padding-bottom: 50px;
+}
+
+.photo-card {
+  box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
+  border-radius: 10px;
+  max-width: 30%;
+  overflow: hidden;
+}
+img {
+  width: 100%;
+  object-fit: cover;
+  height: 80%;
+}
+.info {
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  padding: 25px 22px;
+}
+
+.load-more-btn {
+  display: block;
+  margin: 0 auto;
+  background-color: rgb(110, 165, 228);
+  border: 3px rgb(55, 133, 223);
+  border-radius: 10px;
+  padding: 20px 50px;
+  text-align: center;
+  font-size: 20px;
   box-shadow: 9px 1px 44px -7px rgba(66, 68, 90, 1);
   cursor: pointer;
 }
