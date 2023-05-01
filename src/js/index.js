@@ -61,7 +61,7 @@ const createPhotos = () => {
     //console.log(photos.data.hits);
     //console.log(photos.data.hits.length);
 
-    totalFoundLength = photos.data.total;
+    //totalFoundLength = photos.data.total;
 
     if (photos.data.hits.length === 0) {
       alertNoMatch();
