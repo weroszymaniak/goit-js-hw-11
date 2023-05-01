@@ -3,7 +3,6 @@ import axios from 'axios';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 
-const searchFormEL = document.getElementById('search-form');
 const galleryEl = document.getElementById('gallery');
 const loadBtnEl = document.getElementById('load');
 const searchBtnEl = document.getElementById('search-btn');
@@ -13,7 +12,6 @@ const lightbox = new SimpleLightbox('.gallery a');
 
 let page = 1;
 const per_page = 40;
-let totalFoundLength = 0;
 loadBtnEl.style.visibility = 'hidden';
 
 const fetchPhotos = async () => {
@@ -30,8 +28,6 @@ const fetchPhotos = async () => {
       safesearch: true,
     },
   });
-  //console.log(response);
-
   return response;
 };
 
@@ -66,8 +62,6 @@ const createPhotos = () => {
     console.log(photos);
     //console.log(photos.data.hits);
     //console.log(photos.data.hits.length);
-
-    totalFoundLength = photos.data.total;
 
     if (photos.data.hits.length === 0) {
       alertNoMatch();
@@ -122,10 +116,6 @@ function clearGallery() {
   galleryEl.innerHTML = '';
 }
 
-//function alertFound() {
-//  Notiflix.Notify.success(`Hooray! We found ${photos.data.total} images.`);
-//}
-
 function alertEmpty() {
   Notiflix.Notify.failure(
     'The search bar cannot be empty. Please type any criteria in the search bar.'
@@ -146,14 +136,6 @@ function alertEndOfSearch() {
     "We're sorry, but you've reached the end of search results."
   );
 }
-
-//inputEl.addEventListener('input', event => {
-// console.log(event.target.value + 'ok');
-
-//  if (event.target.value === null || event.target.value === '') {
-//   return alertEmpty;
-//  }
-//});
 
 searchBtnEl.addEventListener('click', event => {
   console.log(inputEl.value);
