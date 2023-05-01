@@ -8,8 +8,6 @@ const loadBtnEl = document.getElementById('load');
 const searchBtnEl = document.getElementById('search-btn');
 const inputEl = document.getElementById('input');
 
-const lightbox = new SimpleLightbox('.gallery a');
-
 let page = 1;
 const per_page = 40;
 loadBtnEl.style.visibility = 'hidden';
@@ -63,6 +61,8 @@ const createPhotos = () => {
     //console.log(photos.data.hits);
     //console.log(photos.data.hits.length);
 
+    totalFoundLength = photos.data.total;
+
     if (photos.data.hits.length === 0) {
       alertNoMatch();
     }
@@ -78,6 +78,7 @@ const createPhotos = () => {
       Notiflix.Notify.success(
         `Hooray! We found ${photos.data.totalHits} images.`
       );
+      let lightbox = new SimpleLightbox('.gallery a');
     }
   });
 };
@@ -94,7 +95,8 @@ function createMore() {
     }
 
     galleryEl.insertAdjacentHTML('beforeend', renderPhotos(photos));
-    lightbox.refresh();
+
+    let lightbox = new SimpleLightbox('.gallery a');
 
     const { height: cardHeight } = document
       .querySelector('.gallery')
